@@ -93,10 +93,10 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
      web3.eth.getTransactionCount(account1, (err, txCount) => {
         // Build the transaction
         const txObject = {
+            nonce:    web3.utils.toHex(txCount),
             to: contractAdd,
-            value: web3.utils.toHex(web3.utils.toWei('0', 'ether')),
-            gasLimit: web3.utils.toHex(2100000),
-            gasPrice: web3.utils.toHex(web3.utils.toWei('10', 'gwei')),
+             value: web3.utils.toHex(web3.utils.toWei('0', 'gwei')),
+            chainId: 80001,
             data: myData
         }
          
@@ -106,13 +106,15 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
         
          const serializedTx = tx.serialize();
          const raw = '0x' + serializedTx.toString('hex');
+         console.log('tx:',tx)
 
-          try{
-         web3.eth.sendSignedTransaction(raw, (err, txHash) => {
-            console.log('txHash:', txHash);
+        async function sign (){
+
+        const ans = await web3.eth.sendSignedTransaction(tx, (err, txHash) => {
          })
-        } catch(e){
-            console.log('error:',e);
-        }
 
+        console.log('ans',txHash)
+    }
+      sign()
         })
+

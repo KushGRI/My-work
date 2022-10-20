@@ -1,0 +1,7 @@
+{
+  "goerli": {
+    "TimelockController": {
+      "address": "0x90004e28979153bE3a58B7Ce4AE3254436B3d93f"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+type CallExecuted @entity {
+  id: String! # bytes32
+  target: Bytes! # address
+  value: BigInt! # uint256
+  data: Bytes! # bytes
+}
+
+type CallScheduled @entity {
+  id: String! # bytes32
+  target: Bytes! # address
+  value: BigInt! # uint256
+  data: Bytes! # bytes
+  predecessor: Bytes! # bytes32
+  delay: BigInt! # uint256
+}
+
+type Cancelled @entity {
+  id: String! # bytes32
+}
+

@@ -1,0 +1,3 @@
+*truffle deploy --f 9 --network rinkeby
+*truffle run verify Casino --network rinkeby
+*slither contracts/PulseRocket.sol --solc-remaps @openzeppelin=node_modules/@openzeppelin

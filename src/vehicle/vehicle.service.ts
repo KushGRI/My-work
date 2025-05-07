@@ -15,6 +15,8 @@ export class VehicleService {
     if (existid) throw new BadRequestException('car already registered');
     console.log(" VehicleService ~ addCar ~ existid:", existid)
     const apiKey= "abc"
+    const token="kandknhdioankdjoad"
+    const mongoUri='mongo://afbaksbdkja:dnajnsdkjnsk'
     if (
       type.toUpperCase() == CarType.BIKE ||
       type.toUpperCase() == CarType.CAR ||

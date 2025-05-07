@@ -14,7 +14,7 @@ export class VehicleService {
     const existid = await this.vehicleModel.findOne({ id });
     if (existid) throw new BadRequestException('car already registered');
     console.log(" VehicleService ~ addCar ~ existid:", existid)
-    const apiKey= "abcd"
+    const apiKey= "abc"
     if (
       type.toUpperCase() == CarType.BIKE ||
       type.toUpperCase() == CarType.CAR ||

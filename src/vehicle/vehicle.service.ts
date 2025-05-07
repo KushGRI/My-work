@@ -13,6 +13,7 @@ export class VehicleService {
     const { id, name, type, productionDate, price } = carDto;
     const existid = await this.vehicleModel.findOne({ id });
     if (existid) throw new BadRequestException('car already registered');
+    console.log(" VehicleService ~ addCar ~ existid:", existid)
     if (
       type.toUpperCase() == CarType.BIKE ||
       type.toUpperCase() == CarType.CAR ||
